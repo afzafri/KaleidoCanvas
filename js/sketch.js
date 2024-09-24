@@ -1,10 +1,12 @@
 let userData;
-const totalShapes = 100; // Number of shapes to generate
+const sections = 8; // Number of mirrored sections for the kaleidoscope
 
 function setup() {
   createCanvas(1800, 1200);
+  angleMode(DEGREES); // Use degrees for rotation
 
-if (!localStorage.getItem('userArtData')) {
+  if (!localStorage.getItem('userArtData')) {
+    // TODO: ask question in frontend form
     let name = prompt("What's your name?");
     let favNumber = prompt("What's your favorite number?");
     let favPerson = prompt("Who's your favorite person?");
@@ -29,22 +31,24 @@ if (!localStorage.getItem('userArtData')) {
 
 function draw() {
   background(255); // White background
+  
+  translate(width / 2, height / 2); // Move origin to the center of the canvas
 
-  // Generate a lot of shapes
+  // Generate shapes based on user input
+  let totalShapes = map(userData.keepsGoing, 1, 20, 50, 150); // More shapes if the answer is long
+  let shapeSizeBase = map(userData.favNumber, 1, 100, 30, 100); // Larger favorite number, larger shapes
+
   for (let i = 0; i < totalShapes; i++) {
-    generateRandomShape();
+    generateKaleidoscopeShape(shapeSizeBase);
   }
 
-  // Add some accent shapes in yellow and pink
-  for (let i = 0; i < 10; i++) {
-    generateAccentShape();
-  }
-
-  // Display user's name and happiness status
+  // Add user-specific text
+  resetMatrix(); // Reset translation for text
   fill(0);
   textSize(32);
   text(userData.name, 50, height - 50);
 
+  // Happy message based on user input
   if (userData.isHappy) {
     fill(0, 255, 0);
     text("You're happy!", 50, height - 100);
@@ -54,56 +58,46 @@ function draw() {
   }
 }
 
-// Function to generate random shapes with black or white colors
-function generateRandomShape() {
+// Function to generate kaleidoscope shapes
+function generateKaleidoscopeShape(shapeSizeBase) {
+  let posX = random(-width / 4, width / 4);
+  let posY = random(-height / 4, height / 4);
+  let size = random(shapeSizeBase * 0.5, shapeSizeBase * 1.5);
+
   let shapeType = int(random(4)); // Random shape type (0: circle, 1: rect, 2: triangle, 3: ellipse)
-  let posX = random(width);
-  let posY = random(height);
-  let size = random(20, 200);
-  let shapeColor = random([0, 255]); // Randomly black or white
+  let shapeColor = random([color(0), color(255)]); // Black or white
+  
+  // Accent colors (yellow and pink) are applied with a lower probability
+  if (random(1) < 0.2) {
+    shapeColor = random([color(255, 204, 0), color(255, 105, 180)]); // Yellow or pink
+  }
   
   fill(shapeColor);
   noStroke();
 
-  switch (shapeType) {
-    case 0:
-      circle(posX, posY, size);
-      break;
-    case 1:
-      rect(posX, posY, size, size * 0.6);
-      break;
-    case 2:
-      triangle(posX, posY, posX + size, posY, posX + size / 2, posY - size);
-      break;
-    case 3:
-      ellipse(posX, posY, size, size * 1.5);
-      break;
+  // Draw shape in one section, and mirror it across other sections
+  for (let i = 0; i < sections; i++) {
+    push();
+    rotate(i * (360 / sections)); // Rotate for kaleidoscope effect
+    drawShape(shapeType, posX, posY, size);
+    pop();
   }
 }
 
-// Function to generate accent shapes in yellow and pink
-function generateAccentShape() {
-  let shapeType = int(random(4)); // Random shape type
-  let posX = random(width);
-  let posY = random(height);
-  let size = random(50, 150);
-  let accentColor = random([color(255, 204, 0), color(255, 105, 180)]); // Yellow or pink
-
-  fill(accentColor);
-  noStroke();
-
+// Helper function to draw individual shapes
+function drawShape(shapeType, x, y, size) {
   switch (shapeType) {
     case 0:
-      circle(posX, posY, size);
+      circle(x, y, size);
       break;
     case 1:
-      rect(posX, posY, size, size * 0.6);
+      rect(x, y, size, size * 0.6);
       break;
     case 2:
-      triangle(posX, posY, posX + size, posY, posX + size / 2, posY - size);
+      triangle(x, y, x + size, y, x + size / 2, y - size);
       break;
     case 3:
-      ellipse(posX, posY, size, size * 1.5);
+      ellipse(x, y, size, size * 1.5);
       break;
   }
 }
