@@ -63,8 +63,15 @@ function generateKaleidoscopeShape(shapeSizeBase) {
     // If happy, more vibrant colors (yellow/pink)
     shapeColor = random([color(0), color(255), color(255, 204, 0), color(255, 105, 180)]); // Black, White, Yellow, Pink
   } else {
-    // If unhappy, less vibrant colors (more black and white, fewer accent colors)
-    shapeColor = random([color(0), color(255), color(150)]); // Mostly Black, White, and Grey for a muted effect
+    // If unhappy, lower chance of yellow/pink, more black and white with a chance for grey
+    let colorProbability = random(1); // Generate a random number between 0 and 1
+    if (colorProbability < 0.8) {
+      // 80% chance for black, white, or grey
+      shapeColor = random([color(0), color(255), color(150)]); // Black, White, and Grey
+    } else {
+      // 20% chance for yellow or pink
+      shapeColor = random([color(255, 204, 0), color(255, 105, 180)]); // Yellow or Pink
+    }
   }
 
   fill(shapeColor);
