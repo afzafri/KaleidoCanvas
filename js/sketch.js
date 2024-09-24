@@ -7,33 +7,26 @@ function setup() {
   angleMode(DEGREES); // Use degrees for rotation
 
   if (!localStorage.getItem('userArtData') || !localStorage.getItem('shapeData')) {
-    // Ask for user input
-    // TODO: ask question in form frontend
+    // Ask for user input (Replace this part with a form in the frontend)
     let name = prompt("What's your name?");
     let favNumber = prompt("What's your favorite number?");
     let favPerson = prompt("Who's your favorite person?");
     let keepsGoing = prompt("What keeps you going in life?");
     let isHappy = prompt("Are you happy?");
 
+    // Store the original input
     userData = {
       name: name,
-      favNumber: parseInt(favNumber) || 50, 
-      favPerson: favPerson.length,
-      keepsGoing: keepsGoing.length,
-      isHappy: isHappy.toLowerCase() === 'yes' ? 1 : 0
+      favNumber: favNumber,
+      favPerson: favPerson,
+      keepsGoing: keepsGoing,
+      isHappy: isHappy
     };
 
     localStorage.setItem('userArtData', JSON.stringify(userData));
 
-    // Generate shapes and store their data
-    let totalShapes = map(userData.keepsGoing, 1, 20, 50, 150); // More shapes if the answer is long
-    let shapeSizeBase = map(userData.favNumber, 1, 100, 30, 100); // Larger favorite number, larger shapes
-
-    for (let i = 0; i < totalShapes; i++) {
-      shapeData.push(generateShapeData(shapeSizeBase)); // Store the shape data
-    }
-
-    localStorage.setItem('shapeData', JSON.stringify(shapeData)); // Save the shape data to localStorage
+    // Generate shapes based on processed values and store their data
+    generateAndSaveShapes();
   } else {
     // Load the user data and shape data from localStorage
     userData = JSON.parse(localStorage.getItem('userArtData'));
@@ -41,6 +34,24 @@ function setup() {
   }
 
   noLoop(); // Draw once
+}
+
+function generateAndSaveShapes() {
+  // Process user data for generating shapes
+  let favNumber = parseInt(userData.favNumber) || 50;
+  let favPersonLength = userData.favPerson.length;
+  let keepsGoingLength = userData.keepsGoing.length;
+  let isHappy = userData.isHappy.toLowerCase() === 'yes' ? 1 : 0;
+
+  // Generate shapes and store their data
+  let totalShapes = map(keepsGoingLength, 1, 20, 50, 150); // More shapes if the answer is long
+  let shapeSizeBase = map(favNumber, 1, 100, 30, 100); // Larger favorite number, larger shapes
+
+  for (let i = 0; i < totalShapes; i++) {
+    shapeData.push(generateShapeData(shapeSizeBase, isHappy)); // Store the shape data
+  }
+
+  localStorage.setItem('shapeData', JSON.stringify(shapeData)); // Save the shape data to localStorage
 }
 
 function draw() {
@@ -61,14 +72,14 @@ function draw() {
 }
 
 // Function to generate random shape data
-function generateShapeData(shapeSizeBase) {
+function generateShapeData(shapeSizeBase, isHappy) {
   let posX = random(-width / 4, width / 4);
   let posY = random(-height / 4, height / 4);
   let size = random(shapeSizeBase * 0.5, shapeSizeBase * 1.5);
   let shapeType = int(random(4)); // Random shape type (0: circle, 1: rect, 2: triangle, 3: ellipse)
   
   let shapeColor;
-  if (userData.isHappy) {
+  if (isHappy) {
     shapeColor = random([
       [0, 0, 0], // Black
       [255, 255, 255], // White
