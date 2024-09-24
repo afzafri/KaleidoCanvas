@@ -4,6 +4,7 @@ const totalShapes = 100; // Number of shapes to generate
 function setup() {
   createCanvas(1800, 1200);
 
+if (!localStorage.getItem('userArtData')) {
     let name = prompt("What's your name?");
     let favNumber = prompt("What's your favorite number?");
     let favPerson = prompt("Who's your favorite person?");
@@ -11,12 +12,17 @@ function setup() {
     let isHappy = prompt("Are you happy?");
 
     userData = {
-        name: name,
-        favNumber: parseInt(favNumber) || 50,
-        favPerson: favPerson.length,
-        keepsGoing: keepsGoing.length,
-        isHappy: isHappy.toLowerCase() === 'yes' ? 1 : 0
+      name: name,
+      favNumber: parseInt(favNumber) || 50, 
+      favPerson: favPerson.length,
+      keepsGoing: keepsGoing.length,
+      isHappy: isHappy.toLowerCase() === 'yes' ? 1 : 0
     };
+
+    localStorage.setItem('userArtData', JSON.stringify(userData));
+  } else {
+    userData = JSON.parse(localStorage.getItem('userArtData'));
+  }
 
   noLoop(); // Draw once
 }
