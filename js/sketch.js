@@ -42,36 +42,31 @@ function draw() {
     generateKaleidoscopeShape(shapeSizeBase);
   }
 
-  // Add user-specific text
+  // Add user-specific name
   resetMatrix(); // Reset translation for text
   fill(0);
   textSize(32);
   text(userData.name, 50, height - 50);
-
-  // Happy message based on user input
-  if (userData.isHappy) {
-    fill(0, 255, 0);
-    text("You're happy!", 50, height - 100);
-  } else {
-    fill(255, 0, 0);
-    text("Stay strong!", 50, height - 100);
-  }
 }
 
-// Function to generate kaleidoscope shapes
+// Function to generate kaleidoscope shapes with different color schemes based on happiness
 function generateKaleidoscopeShape(shapeSizeBase) {
   let posX = random(-width / 4, width / 4);
   let posY = random(-height / 4, height / 4);
   let size = random(shapeSizeBase * 0.5, shapeSizeBase * 1.5);
 
   let shapeType = int(random(4)); // Random shape type (0: circle, 1: rect, 2: triangle, 3: ellipse)
-  let shapeColor = random([color(0), color(255)]); // Black or white
-  
-  // Accent colors (yellow and pink) are applied with a lower probability
-  if (random(1) < 0.2) {
-    shapeColor = random([color(255, 204, 0), color(255, 105, 180)]); // Yellow or pink
+  let shapeColor;
+
+  // Adjust the likelihood of yellow and pink based on happiness
+  if (userData.isHappy) {
+    // If happy, more vibrant colors (yellow/pink)
+    shapeColor = random([color(0), color(255), color(255, 204, 0), color(255, 105, 180)]); // Black, White, Yellow, Pink
+  } else {
+    // If unhappy, less vibrant colors (more black and white, fewer accent colors)
+    shapeColor = random([color(0), color(255), color(150)]); // Mostly Black, White, and Grey for a muted effect
   }
-  
+
   fill(shapeColor);
   noStroke();
 
