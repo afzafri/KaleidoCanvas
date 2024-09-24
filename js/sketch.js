@@ -1,13 +1,5 @@
 let userData;
-
-// Helper function to check if a number is prime
-function isPrime(num) {
-  if (num <= 1) return false;
-  for (let i = 2; i <= Math.sqrt(num); i++) {
-    if (num % i === 0) return false;
-  }
-  return true;
-}
+const totalShapes = 100; // Number of shapes to generate
 
 function setup() {
   createCanvas(1800, 1200);
@@ -19,38 +11,93 @@ function setup() {
     let isHappy = prompt("Are you happy?");
 
     userData = {
-    name: name,
-    favNumber: parseInt(favNumber) || 50, 
-    favPerson: favPerson.length,
-    keepsGoing: keepsGoing.length,
-    isHappy: isHappy.toLowerCase() === 'yes' ? 1 : 0
+        name: name,
+        favNumber: parseInt(favNumber) || 50,
+        favPerson: favPerson.length,
+        keepsGoing: keepsGoing.length,
+        isHappy: isHappy.toLowerCase() === 'yes' ? 1 : 0
     };
-  
-  noLoop();
+
+  noLoop(); // Draw once
 }
 
 function draw() {
   background(255); // White background
 
-  // Use favorite number to determine shape type (prime or not)
-  if (isPrime(userData.favNumber)) {
-    fill(255, 204, 0); // Yellow
-    triangle(200, 300, 200 + userData.favNumber * 2, 300, 250, 400); // Draw triangle
-  } else {
-    fill(255, 204, 0); // Yellow
-    rect(100 + userData.favNumber * 3, 200, 80, 80); // Draw square
+  // Generate a lot of shapes
+  for (let i = 0; i < totalShapes; i++) {
+    generateRandomShape();
   }
 
-  // Use favorite person's name length to determine shape (odd/even)
-  if (userData.favPerson % 2 === 0) {
-    fill(255, 105, 180); // Pink
-    rect(200 + userData.keepsGoing * 2, 400, userData.favNumber * 2, 50); // Draw rectangle
-  } else {
-    fill(255, 105, 180); // Pink
-    ellipse(300 + userData.keepsGoing * 3, 500, 100, 150); // Draw ellipse
+  // Add some accent shapes in yellow and pink
+  for (let i = 0; i < 10; i++) {
+    generateAccentShape();
   }
 
+  // Display user's name and happiness status
   fill(0);
   textSize(32);
-  text(userData.name, 50, height - 50); // Display user's name
+  text(userData.name, 50, height - 50);
+
+  if (userData.isHappy) {
+    fill(0, 255, 0);
+    text("You're happy!", 50, height - 100);
+  } else {
+    fill(255, 0, 0);
+    text("Stay strong!", 50, height - 100);
+  }
+}
+
+// Function to generate random shapes with black or white colors
+function generateRandomShape() {
+  let shapeType = int(random(4)); // Random shape type (0: circle, 1: rect, 2: triangle, 3: ellipse)
+  let posX = random(width);
+  let posY = random(height);
+  let size = random(20, 200);
+  let shapeColor = random([0, 255]); // Randomly black or white
+  
+  fill(shapeColor);
+  noStroke();
+
+  switch (shapeType) {
+    case 0:
+      circle(posX, posY, size);
+      break;
+    case 1:
+      rect(posX, posY, size, size * 0.6);
+      break;
+    case 2:
+      triangle(posX, posY, posX + size, posY, posX + size / 2, posY - size);
+      break;
+    case 3:
+      ellipse(posX, posY, size, size * 1.5);
+      break;
+  }
+}
+
+// Function to generate accent shapes in yellow and pink
+function generateAccentShape() {
+  let shapeType = int(random(4)); // Random shape type
+  let posX = random(width);
+  let posY = random(height);
+  let size = random(50, 150);
+  let accentColor = random([color(255, 204, 0), color(255, 105, 180)]); // Yellow or pink
+
+  fill(accentColor);
+  noStroke();
+
+  switch (shapeType) {
+    case 0:
+      circle(posX, posY, size);
+      break;
+    case 1:
+      rect(posX, posY, size, size * 0.6);
+      break;
+    case 2:
+      triangle(posX, posY, posX + size, posY, posX + size / 2, posY - size);
+      break;
+    case 3:
+      ellipse(posX, posY, size, size * 1.5);
+      break;
+  }
 }
