@@ -1,1 +1,2 @@
 # KaleidoCanvas
+KaleidoCanvas is an interactive digital art project where users create unique, kaleidoscopic artwork by answering simple questions. Each response shapes the design, resulting in a personalized abstract piece with dynamic symmetry and vibrant colors.
