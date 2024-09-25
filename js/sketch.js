@@ -104,10 +104,10 @@ let initSketch = function(p) {
     });
 
     // Add user-specific name
-    p.resetMatrix(); // Reset translation for text
-    p.fill(0);
-    p.textSize(32);
-    p.text(userData.name, 50, p.height - 50);
+    // p.resetMatrix(); // Reset translation for text
+    // p.fill(0);
+    // p.textSize(32);
+    // p.text(userData.name, 50, p.height - 50);
   };
 
   // Function to generate random shape data
@@ -182,7 +182,11 @@ let initSketch = function(p) {
 
   // Custom fill function to convert RGB arrays to p5.Color
   p.fill = function(colorArray) {
-    let col = p.color(...colorArray);
-    p5.prototype.fill.call(p, col);
+    if (Array.isArray(colorArray) && colorArray.length === 3) {
+      let col = p.color(...colorArray);
+      p5.prototype.fill.call(p, col);
+    } else {
+      console.error('Invalid color array:', colorArray);
+    }
   };
 };
