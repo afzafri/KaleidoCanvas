@@ -11,84 +11,86 @@
 </head>
 
 <body>
-    <div class="container mt-5">
-        <div class="card shadow-lg p-4 mb-5">
-            <h2 class="text-center mb-4">KaleidoCanvas</h2>
+    <div class="container p-5 mb-5">
+        <h1>KaleidoCanvas</h1>
+        <a class="" href="https://github.com/afzafri/KaleidoCanvas" target="_blank">
+            View Project on GitHub
+        </a>
 
-            <!-- Form Section -->
-            <form id="userForm">
-                <!-- Name -->
-                <div class="mb-3">
-                    <label for="name" class="form-label"><i class="fas fa-user"></i> What's your name?</label>
-                    <input type="text" class="form-control" id="name" placeholder="Enter your name" required>
-                </div>
-
-                <!-- Favorite Number -->
-                <div class="mb-3">
-                    <label for="favNumber" class="form-label"><i class="fas fa-star"></i> What's your favorite number
-                        (1-100)?</label>
-                    <input type="number" class="form-control" id="favNumber" min="1" max="100"
-                        placeholder="Enter a number" required>
-                </div>
-
-                <!-- Favorite Person -->
-                <div class="mb-3">
-                    <label for="favPerson" class="form-label"><i class="fas fa-heart"></i> Who's your favorite person in
-                        the world?</label>
-                    <input type="text" class="form-control" id="favPerson" placeholder="Enter their name" required>
-                </div>
-
-                <!-- What Keeps You Going -->
-                <div class="mb-3">
-                    <label for="keepsGoing" class="form-label"><i class="fas fa-lightbulb"></i> What inspires or
-                        motivates you in life?</label>
-                    <input type="text" class="form-control" id="keepsGoing" placeholder="Enter what keeps you going"
-                        required>
-                </div>
-
-                <!-- Are You Happy? -->
-                <div class="mb-3">
-                    <label class="form-label"><i class="fas fa-smile"></i> Are you feeling happy right now?</label>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="isHappy" id="happyYes" value="yes" required>
-                        <label class="form-check-label" for="happyYes">
-                            Yes
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="isHappy" id="happyNo" value="no" required>
-                        <label class="form-check-label" for="happyNo">
-                            No
-                        </label>
-                    </div>
-                </div>
-
-                <button type="submit" class="btn btn-primary w-100 mt-3">Submit</button>
-            </form>
-
-            <!-- Section to display saved user data -->
-            <div id="userDataSection" class="mt-2" style="display: none;">
-                <p><strong>Name:</strong> <span id="savedName"></span></p>
-                <p><strong>Favorite Number:</strong> <span id="savedFavNumber"></span></p>
-                <p><strong>Favorite Person:</strong> <span id="savedFavPerson"></span></p>
-                <p><strong>What keeps you going:</strong> <span id="savedKeepsGoing"></span></p>
-                <p><strong>Are you happy:</strong> <span id="savedIsHappy"></span></p>
+        <!-- Form Section -->
+        <form id="userForm" class="mt-4">
+            <!-- Name -->
+            <div class="mb-3">
+                <label for="name" class="form-label">What's your name?</label>
+                <input type="text" class="form-control" id="name" placeholder="Enter your name" required>
             </div>
+
+            <!-- Favorite Number -->
+            <div class="mb-3">
+                <label for="favNumber" class="form-label">What's your favorite number
+                    (1-100)?</label>
+                <input type="number" class="form-control" id="favNumber" min="1" max="100"
+                    placeholder="Enter a number" required>
+            </div>
+
+            <!-- Favorite Person -->
+            <div class="mb-3">
+                <label for="favPerson" class="form-label">Who's your favorite person in
+                    the world?</label>
+                <input type="text" class="form-control" id="favPerson" placeholder="Enter their name" required>
+            </div>
+
+            <!-- What Keeps You Going -->
+            <div class="mb-3">
+                <label for="keepsGoing" class="form-label">What inspires or
+                    motivates you in life?</label>
+                <input type="text" class="form-control" id="keepsGoing" placeholder="Enter what keeps you going"
+                    required>
+            </div>
+
+            <!-- Are You Happy? -->
+            <div class="mb-3">
+                <label class="form-label">Are you feeling happy right now?</label>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="isHappy" id="happyYes" value="yes" required>
+                    <label class="form-check-label" for="happyYes">
+                        Yes
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="isHappy" id="happyNo" value="no" required>
+                    <label class="form-check-label" for="happyNo">
+                        No
+                    </label>
+                </div>
+            </div>
+
+            <button type="submit" class="btn-custom btn-primary-custom w-100 mt-3">Submit</button>
+        </form>
+
+        <!-- Section to display saved user data -->
+        <div id="userDataSection" class="mt-4" style="display: none;">
+            <p><strong>Name:</strong> <span id="savedName"></span></p>
+            <p><strong>Favorite Number:</strong> <span id="savedFavNumber"></span></p>
+            <p><strong>Favorite Person:</strong> <span id="savedFavPerson"></span></p>
+            <p><strong>What keeps you going:</strong> <span id="savedKeepsGoing"></span></p>
+            <p><strong>Are you happy:</strong> <span id="savedIsHappy"></span></p>
         </div>
 
-        <!-- Slider Container -->
-        <div class="slidecontainer mb-1 d-flex align-items-center col-4">
-            <label for="section" class="form-label me-3">Sections:</label>
-            <input type="range" min="6" max="40" value="8" class="form-range w-50" id="section" step="2">
-            <div class="slider-value ms-3" id="sliderValue">8</div>
+        <div class="d-flex flex-row justify-content-between mt-3">
+            <!-- Slider Container -->
+            <div class="slidecontainer mb-1 d-flex d-none align-items-center" id="slidecontainer">
+                <label for="section" class="form-label me-3 w-50">Reflections:</label>
+                <input type="range" min="6" max="40" value="8" class="form-range w-70" id="section" step="2">
+                <div class="slider-value ms-3" id="sliderValue">8</div>
+            </div>
+
+            <!-- Save Image Button -->
+            <div id="saveImageButton" class="mb-2"></div>
         </div>
 
          <div id="p5CanvasContainer" class="canvas-container">
          </div>
-
-         <!-- Save Image Button -->
-         <div id="saveImageButton"></div>
-
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>

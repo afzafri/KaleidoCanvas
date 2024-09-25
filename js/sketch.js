@@ -63,6 +63,7 @@ function displayUserData(userData) {
 
     // Show the saved data section
     document.getElementById('userDataSection').style.display = 'block';
+    document.getElementById('slidecontainer').classList.remove('d-none');
 }
 
 let initSketch = function(p) {
@@ -107,8 +108,9 @@ let initSketch = function(p) {
 
     p.noLoop(); // Draw once
 
-    let saveButton = p.createButton('<i class="fas fa-download"></i> Download');
+    let saveButton = p.createButton('Download');
     saveButton.parent('saveImageButton');
+    saveButton.class('btn-custom btn-primary-custom');
     saveButton.mousePressed(saveCanvasImage);
   };
 
