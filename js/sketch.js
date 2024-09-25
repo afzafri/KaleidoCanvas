@@ -91,6 +91,10 @@ let initSketch = function(p) {
     }
 
     p.noLoop(); // Draw once
+
+    let saveButton = p.createButton('<i class="fas fa-download"></i> Download');
+    saveButton.parent('saveImageButton');
+    saveButton.mousePressed(saveCanvasImage);
   };
 
   p.draw = function() {
@@ -189,4 +193,8 @@ let initSketch = function(p) {
       console.error('Invalid color array:', colorArray);
     }
   };
+
+  function saveCanvasImage() {
+      p.saveCanvas(userData.name + '_KaleidoCanvas', 'png');
+  }
 };

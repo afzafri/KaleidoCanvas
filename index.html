@@ -33,6 +33,33 @@
             border: 1px solid #333;
             border-radius: 12px;
         }
+
+         #saveImageButton {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%; /* Adjust as needed */
+            margin-top: 10px;
+        }
+
+        #saveImageButton button {
+            background-color: #007bff; /* Bootstrap primary color */
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        #saveImageButton button i {
+            margin-right: 8px; /* Space between icon and text */
+        }
+
+        #saveImageButton button:hover {
+            background-color: #0056b3; /* Darker shade of primary color */
+        }
     </style>
 </head>
 
@@ -104,6 +131,10 @@
 
          <div id="p5CanvasContainer" class="canvas-container mt-5">
          </div>
+
+         <!-- Save Image Button -->
+         <div id="saveImageButton"></div>
+
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
