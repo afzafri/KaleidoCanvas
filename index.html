@@ -5,11 +5,88 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KaleidoCanvas</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
     <link rel="stylesheet" href="style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+         body, html {
+            height: 100%;
+        }
+    </style>
 </head>
 
 <body>
+    <div class="container mt-5">
+        <div class="card shadow-lg p-4">
+            <h2 class="text-center mb-4">KaleidoCanvas</h2>
+
+            <!-- Form Section -->
+            <form id="userForm">
+                <!-- Name -->
+                <div class="mb-3">
+                    <label for="name" class="form-label"><i class="fas fa-user"></i> What's your name?</label>
+                    <input type="text" class="form-control" id="name" placeholder="Enter your name" required>
+                </div>
+
+                <!-- Favorite Number -->
+                <div class="mb-3">
+                    <label for="favNumber" class="form-label"><i class="fas fa-star"></i> What's your favorite number
+                        (1-100)?</label>
+                    <input type="number" class="form-control" id="favNumber" min="1" max="100"
+                        placeholder="Enter a number" required>
+                </div>
+
+                <!-- Favorite Person -->
+                <div class="mb-3">
+                    <label for="favPerson" class="form-label"><i class="fas fa-heart"></i> Who's your favorite person in
+                        the world?</label>
+                    <input type="text" class="form-control" id="favPerson" placeholder="Enter their name" required>
+                </div>
+
+                <!-- What Keeps You Going -->
+                <div class="mb-3">
+                    <label for="keepsGoing" class="form-label"><i class="fas fa-lightbulb"></i> What inspires or
+                        motivates you in life?</label>
+                    <input type="text" class="form-control" id="keepsGoing" placeholder="Enter what keeps you going"
+                        required>
+                </div>
+
+                <!-- Are You Happy? -->
+                <div class="mb-3">
+                    <label class="form-label"><i class="fas fa-smile"></i> Are you feeling happy right now?</label>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="isHappy" id="happyYes" value="yes" required>
+                        <label class="form-check-label" for="happyYes">
+                            Yes
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="isHappy" id="happyNo" value="no" required>
+                        <label class="form-check-label" for="happyNo">
+                            No
+                        </label>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary w-100 mt-3">Submit</button>
+            </form>
+
+            <!-- Section to display saved user data -->
+            <div id="userDataSection" class="mt-2" style="display: none;">
+                <p><strong>Name:</strong> <span id="savedName"></span></p>
+                <p><strong>Favorite Number:</strong> <span id="savedFavNumber"></span></p>
+                <p><strong>Favorite Person:</strong> <span id="savedFavPerson"></span></p>
+                <p><strong>What keeps you going:</strong> <span id="savedKeepsGoing"></span></p>
+                <p><strong>Are you happy:</strong> <span id="savedIsHappy"></span></p>
+            </div>
+        </div>
+    </div>
+
+    <div id="p5CanvasContainer" class="canvas-container">
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="./js/sketch.js"></script>
 </body>
 

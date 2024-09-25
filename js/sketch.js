@@ -1,6 +1,54 @@
 document.addEventListener('DOMContentLoaded', () => {
-    let instance = new p5(initSketch);
+    let userData = JSON.parse(localStorage.getItem('userArtData'));
+
+    if (userData) {
+        displayUserData(userData)
+
+        let instance = new p5(initSketch);
+    } else {
+        // Handle form submission
+        document.getElementById('userForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent form submission
+            
+            // Get the user input values
+            const name = document.getElementById('name').value;
+            const favNumber = document.getElementById('favNumber').value;
+            const favPerson = document.getElementById('favPerson').value;
+            const keepsGoing = document.getElementById('keepsGoing').value;
+            const isHappy = document.querySelector('input[name="isHappy"]:checked').value;
+
+            // Save user data to localStorage
+            userData = {
+              name: name,
+              favNumber: favNumber,
+              favPerson: favPerson,
+              keepsGoing: keepsGoing,
+              isHappy: isHappy
+            };
+
+            localStorage.setItem('userArtData', JSON.stringify(userData));
+
+            displayUserData(userData)
+
+            let instance = new p5(initSketch);
+        });
+    }
 });
+
+function displayUserData(userData) {
+    // Hide the form
+    document.getElementById('userForm').style.display = 'none';
+    
+    // Populate the saved data
+    document.getElementById('savedName').textContent = userData.name;
+    document.getElementById('savedFavNumber').textContent = userData.favNumber;
+    document.getElementById('savedFavPerson').textContent = userData.favPerson;
+    document.getElementById('savedKeepsGoing').textContent = userData.keepsGoing;
+    document.getElementById('savedIsHappy').textContent = userData.isHappy ? 'Yes' : 'No';
+
+    // Show the saved data section
+    document.getElementById('userDataSection').style.display = 'block';
+}
 
 let initSketch = function(p) {
   let userData;
@@ -8,27 +56,26 @@ let initSketch = function(p) {
   const sections = 8; // Number of mirrored sections for the kaleidoscope
 
   p.setup = function() {
-    p.createCanvas(1800, 1200);
+    let canvas = p.createCanvas(1800, 1200);
+    canvas.parent('p5CanvasContainer'); // Attach canvas to the div
     p.angleMode(p.DEGREES); // Use degrees for rotation
 
-    if (!localStorage.getItem('userArtData') || !localStorage.getItem('shapeData')) {
-      // Ask for user input (This part can be updated to a form in the frontend)
-      let name = prompt("What's your name?");
-      let favNumber = prompt("What's your favorite number?");
-      let favPerson = prompt("Who's your favorite person?");
-      let keepsGoing = prompt("What keeps you going in life?");
-      let isHappy = prompt("Are you happy?");
+    userData = JSON.parse(localStorage.getItem('userArtData'));
+    let name = userData.name;
+    let favNumber = parseInt(userData.favNumber) || 50;
+    let favPersonLength = userData.favPerson.length;
+    let keepsGoingLength = userData.keepsGoing.length;
+    let isHappy = userData.isHappy.toLowerCase() === 'yes' ? 1 : 0;
 
-      userData = {
+     userData = {
         name: name,
-        favNumber: parseInt(favNumber) || 50, 
-        favPerson: favPerson.length,
-        keepsGoing: keepsGoing.length,
-        isHappy: isHappy.toLowerCase() === 'yes' ? 1 : 0
+        favNumber: favNumber,
+        favPerson: favPersonLength,
+        keepsGoing: keepsGoingLength,
+        isHappy: isHappy
       };
-
-      localStorage.setItem('userArtData', JSON.stringify(userData));
-
+    
+    if (!localStorage.getItem('shapeData')) {
       // Generate shapes and store their data
       let totalShapes = p.map(userData.keepsGoing, 1, 20, 50, 150); // More shapes if the answer is long
       let shapeSizeBase = p.map(userData.favNumber, 1, 100, 30, 100); // Larger favorite number, larger shapes
@@ -40,7 +87,6 @@ let initSketch = function(p) {
       localStorage.setItem('shapeData', JSON.stringify(shapeData)); // Save the shape data to localStorage
     } else {
       // Load the user data and shape data from localStorage
-      userData = JSON.parse(localStorage.getItem('userArtData'));
       shapeData = JSON.parse(localStorage.getItem('shapeData'));
     }
 
