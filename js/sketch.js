@@ -33,6 +33,21 @@ document.addEventListener('DOMContentLoaded', () => {
             let instance = new p5(initSketch);
         });
     }
+
+    const slider = document.getElementById('section');
+    const sliderValue = document.getElementById('sliderValue');
+
+    slider.addEventListener('input', function() {
+        sliderValue.textContent = this.value;
+    });
+
+    slider.addEventListener('input', function(event) {
+      // Clear the existing canvas and button
+      document.getElementById('p5CanvasContainer').innerHTML = '';
+      document.getElementById('saveImageButton').innerHTML = '';
+      
+      instance = new p5(initSketch);
+    });
 });
 
 function displayUserData(userData) {
@@ -53,7 +68,7 @@ function displayUserData(userData) {
 let initSketch = function(p) {
   let userData;
   let shapeData = []; // Array to store the shape data
-  const sections = 8; // Number of mirrored sections for the kaleidoscope
+  const sections = document.getElementById('section').value ?? 8; // Number of mirrored sections for the kaleidoscope
 
   p.setup = function() {
     let canvas = p.createCanvas(1800, 1200);

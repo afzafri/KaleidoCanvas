@@ -5,67 +5,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KaleidoCanvas</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="./css/style.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <style>
-         body, html {
-            height: 100%;
-        }
-
-        #p5CanvasContainer {
-            width: 100%;
-            height: auto;
-            max-width: 100%;
-            max-height: 100%;
-            display: block;
-        }
-
-        #p5CanvasContainer canvas {
-            width: 100%;
-            height: auto;
-            display: block;
-        }
-
-        .p5Canvas {
-            width: 100% !important;
-            height: 100% !important;
-            border: 1px solid #333;
-            border-radius: 12px;
-        }
-
-         #saveImageButton {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100%; /* Adjust as needed */
-            margin-top: 10px;
-        }
-
-        #saveImageButton button {
-            background-color: #007bff; /* Bootstrap primary color */
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            font-size: 16px;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        #saveImageButton button i {
-            margin-right: 8px; /* Space between icon and text */
-        }
-
-        #saveImageButton button:hover {
-            background-color: #0056b3; /* Darker shade of primary color */
-        }
-    </style>
 </head>
 
 <body>
     <div class="container mt-5">
-        <div class="card shadow-lg p-4">
+        <div class="card shadow-lg p-4 mb-5">
             <h2 class="text-center mb-4">KaleidoCanvas</h2>
 
             <!-- Form Section -->
@@ -129,7 +76,14 @@
             </div>
         </div>
 
-         <div id="p5CanvasContainer" class="canvas-container mt-5">
+        <!-- Slider Container -->
+        <div class="slidecontainer mb-1 d-flex align-items-center col-4">
+            <label for="section" class="form-label me-3">Sections:</label>
+            <input type="range" min="6" max="40" value="8" class="form-range w-50" id="section" step="2">
+            <div class="slider-value ms-3" id="sliderValue">8</div>
+        </div>
+
+         <div id="p5CanvasContainer" class="canvas-container">
          </div>
 
          <!-- Save Image Button -->
