@@ -3,7 +3,6 @@ KaleidoCanvas is an interactive digital art project where users create unique, k
 
 ## Tech Stack
 - **p5.js**: A JavaScript library that makes it easy to create and manipulate graphics and interactive content.
-- **Bootstrap**: A popular CSS framework for building responsive and mobile-first websites.
 - **LocalStorage**: Used to store user data and shape data for a personalized experience.
 
 ## Design Philosophy: Neumorphism
